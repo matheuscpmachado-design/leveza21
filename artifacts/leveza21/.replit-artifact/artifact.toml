@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Leveza 21 Check-in"
+description = "Um app pessoal de 21 dias para acompanhar treinos em casa, hábitos alimentares, hidratação, energia e evolução do peso."
+version = "1.0.0"
+id = "artifacts/leveza21"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21816
+
+[services.development]
+run = "pnpm --filter @workspace/leveza21 run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/leveza21", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/leveza21/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21816"
+BASE_PATH = "/"
